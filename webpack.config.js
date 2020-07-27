@@ -16,24 +16,24 @@ module.exports = {
     net: 'empty',
     tls: 'empty'
   },
-  plugins: [
-    new HtmlWebpackPlugin({
-      template: './public/src/index.html',
-      filename: 'index.html'
-    }),
-    new CopyWebpackPlugin({
-      patterns: [
-          {from: './assets', to: 'assets'}
-      ]
-    }),
-    new webpack.ProvidePlugin({
-      $: 'jquery',
-      jQuery: 'jquery',
-      'window.jQuery': 'jquery',
-      Popper: ['popper.js', 'default'],
-      _: "underscore"
-    })
-  ],
+  // plugins: [
+  //   new HtmlWebpackPlugin({
+  //     template: './public/src/index.html',
+  //     filename: 'index.html'
+  //   }),
+  //   new CopyWebpackPlugin({
+  //     patterns: [
+  //         {from: './assets', to: 'assets'}
+  //     ]
+  //   }),
+  //   new webpack.ProvidePlugin({
+  //     $: 'jquery',
+  //     jQuery: 'jquery',
+  //     'window.jQuery': 'jquery',
+  //     Popper: ['popper.js', 'default'],
+  //     _: "underscore"
+  //   })
+  // ],
   module: {
     rules: [
       {
@@ -41,8 +41,9 @@ module.exports = {
         use: ['style-loader', 'css-loader'],
       },
       {
-        test: /\.(js|jsx)$/,
+        test: /\.jsx?/,
         exclude: /node_modules/,
+        include: SRC_DIR,
         use: {
           loader: 'babel-loader'
         }
