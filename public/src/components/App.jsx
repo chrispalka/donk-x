@@ -1,6 +1,7 @@
 import React, { component } from "react";
 import ReactDOM from "react-dom";
-import Main from './Main.jsx'
+import Main from './Main.jsx';
+import Login from './Login.jsx';
 
 class App extends React.Component {
   constructor() {
@@ -33,13 +34,7 @@ class App extends React.Component {
   render() {
     if(!this.state.loginComplete) {
       return (
-        <div className="container">
-          <form className="login" onSubmit={this.handleSubmit}>
-            <label htmlFor="username">Login:</label>
-            <input type="text" name="username" value={this.state.username} onChange={this.onChange} placeholder="Enter name"></input>
-            <button type="submit" className="btn btn-primary">GO</button>
-          </form>
-        </div>
+        <Login login={this.handleSubmit} onChange={this.onChange.bind(this)} value={this.state.username}/>
       )
     } else {
       return (

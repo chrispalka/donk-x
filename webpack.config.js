@@ -37,21 +37,12 @@ module.exports = {
   module: {
     rules: [
       {
-        test: /\.css$/,
-        use: ['style-loader', 'css-loader'],
-      },
-      {
         test: /\.jsx?/,
-        exclude: /node_modules/,
         include: SRC_DIR,
-        use: {
-          loader: 'babel-loader'
-        }
-      },
-      {
-        test: /\.html$/,
-        use: {
-          loader: 'html-loader'
+        loader: 'babel-loader',
+        query: {
+          presets: ['@babel/react', '@babel/env'],
+          plugins: ['@babel/plugin-proposal-class-properties']
         }
       }
     ]

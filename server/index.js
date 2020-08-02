@@ -5,16 +5,32 @@ const path = require ('path');
 const fs = require ('fs');
 const multer = require('multer');
 const upload = multer({});
-const headers = require('../cors.json');
+const cors = require('cors');
+const passport = require('passport');
+const passportLocal = require('passport-local').Strategy;
+const cookieParser = require('cookie-parser');
+const bcrypt = require('bcryptjs');
+const session = require('express-session');
 const { insertRow } = require('../db/index.js');
 const stockxAPI = require('stockx-api');
 const stockX = new stockxAPI();
 
 
 const app = express();
-
+app.set('view-engine', 'ejs')
+app.use(
+  cors({
+    origin: 'http://localhost:300',
+    credentials: true,
+  })
+);
 app.use(express.static(path.join(__dirname, '../public/dist')));
-
+app.use(session({
+  secret: 'secretcode',
+  resave: true,
+  saveUninitialized: true
+}));
+app.use(cookieParser('secretcode'));
 
 app.post('/login', upload.none(), (req, res) => {
   let username = req.body.username;
@@ -29,8 +45,14 @@ app.post('/login', upload.none(), (req, res) => {
     }
   });
 
-  res.set(headers);
+  // res.set(headers);
   res.sendStatus(200);
+});
+app.post('/register', upload.none(), (req, res) => {
+
+});
+app.get('/user', upload.none(), (req, res) => {
+
 });
 
 app.post('/search', upload.none(), (req, res) => {
