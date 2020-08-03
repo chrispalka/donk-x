@@ -80,6 +80,7 @@ app.post('/renderfavorite', upload.none(), (req, res) => {
   console.log('currentuser: ', currentuser)
   insertRow(`SELECT * FROM FAVORITES WHERE user_id = (SELECT id FROM users WHERE username = '${currentuser}' )`, (result) => {
     result = JSON.parse(JSON.stringify(result));
+    console.log('result from query: ', result)
     res.status(200).json({ result })
   })
 });

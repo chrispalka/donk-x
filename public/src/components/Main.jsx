@@ -4,6 +4,8 @@ import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './List.jsx';
 import Favorites from './Favorites.jsx';
 import Navigation from './Navigation.jsx';
+import Login from './Login.jsx';
+import Register from './Register.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from "@fortawesome/free-solid-svg-icons";
@@ -20,7 +22,6 @@ class Main extends React.Component {
       searchResults: [],
       favoriteResults: {},
       savedFavorites: {},
-      favoriteView: false
     }
   }
 
@@ -32,7 +33,6 @@ class Main extends React.Component {
 
 
   handleSearch = (e) => {
-    let results;
     e.preventDefault();
     const data = new FormData()
     data.append('search', this.state.search);
@@ -102,11 +102,10 @@ class Main extends React.Component {
   }
 
   renderFavorites = () => {
+    console.log('Render fav clicked!')
     const favoriteStore = this.state.favoriteResults;
     const savedFavorites = this.state.savedFavorites;
     const data = new FormData();
-    const results = [];
-    const dataObj = {}
     data.append('name', this.props.username);
     fetch('/renderfavorite', {
       method: 'POST',
@@ -114,6 +113,7 @@ class Main extends React.Component {
     })
       .then(res => res.json())
       .then(data => {
+        console.log('data!! ', data.result)
         for (var i = 0; i < data.result.length; i++) {
           let currentItem = data.result[i]
           favoriteStore[currentItem.name] = {
@@ -128,15 +128,16 @@ class Main extends React.Component {
         this.setState(savedFavorites);
         this.setState(favoriteStore);
       })
-    this.setState(state => ({
-      favoriteView: !this.state.favoriteView
-    }));
   }
 
   render() {
     return (
       <div className="container">
-        <Navigation />
+        <Navigation/>
+        <Router>
+          <Route path='/login' component={Login} />
+          <Route path='/register' component={Register} />
+        </Router>
         <span className="favorite"><FontAwesomeIcon icon={faStar} onClick={this.renderFavorites} /></span>
         <form onSubmit={this.handleSearch}>
           <div className="form-group">
@@ -155,10 +156,10 @@ class Main extends React.Component {
           </thead>
           <Router>
             <Route path='/favorites' render={(props) => (
-              <Favorites {...props} favoriteResults={this.state.favoriteResults} savedFavorites={this.state.savedFavorites} handleFavorite={this.handleFavorite} />
+              <Favorites {...props} favoriteResults={this.state.favoriteResults} savedFavorites={this.state.savedFavorites} handleFavorite={this.handleFavorite} renderFavorites={this.renderFavorites}/>
             )} />
-          <List searchResults={this.state.searchResults} favoriteResults={this.state.favoriteResults} handleFavorite={this.handleFavorite} />
           </Router>
+          <List searchResults={this.state.searchResults} favoriteResults={this.state.favoriteResults} handleFavorite={this.handleFavorite} />
         </table>
       </div>
     )

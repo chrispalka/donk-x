@@ -1,5 +1,7 @@
 import React, { component } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
+
 import Main from './Main.jsx';
 import Login from './Login.jsx';
 
@@ -11,7 +13,8 @@ class App extends React.Component {
       registerPassword: '',
       loginUsername: '',
       loginPassword: '',
-      loginComplete: false
+      loginComplete: false,
+      username: 'Chris'
     }
   }
 
@@ -36,7 +39,7 @@ class App extends React.Component {
 
   render() {
       return (
-        <Main username={this.state.loginUsername} />
+          <Main username={this.state.username} />
       )
   }
 }

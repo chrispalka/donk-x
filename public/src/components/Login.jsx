@@ -3,7 +3,7 @@ import React, { component } from "react";
 
 const Login = (props) => (
   <div className="container">
-    <form className="login" onSubmit={props.login}>
+    <form onSubmit={props.login}>
       <h1>Login</h1>
       <div className="form-group">
         <input type="text" name="loginUsername" onChange={props.onChange} placeholder="username"></input>
