@@ -1,9 +1,11 @@
 import React, { component } from "react";
 import ReactDOM from "react-dom";
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 import List from './List.jsx';
-import Favorites from './Favorites.jsx'
+import Favorites from './Favorites.jsx';
+import Navigation from './Navigation.jsx';
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { library } from '@fortawesome/fontawesome-svg-core'
+import { library } from '@fortawesome/fontawesome-svg-core';
 import { faStar } from "@fortawesome/free-solid-svg-icons";
 import { faHome } from "@fortawesome/free-solid-svg-icons";
 import { fas } from "@fortawesome/free-solid-svg-icons";
@@ -132,16 +134,11 @@ class Main extends React.Component {
   }
 
   render() {
-    let h1;
-    if (this.props.username.length < 1) {
-      h1 = <h1>Welcome back!</h1>
-    } else {
-      h1 = <h1>Welcome back {this.props.username}!</h1>
-    }
     if (!this.state.favoriteView) {
       return (
         <div className="container">
-          {h1}
+        <Navigation />
+
           <span className="favorite"><FontAwesomeIcon icon={faStar} onClick={this.renderFavorites} /></span>
           <form onSubmit={this.handleSearch}>
             <div className="form-group">

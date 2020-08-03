@@ -7,7 +7,10 @@ class App extends React.Component {
   constructor() {
     super()
     this.state = {
-      username: '',
+      registerUsername: '',
+      registerPassword: '',
+      loginUsername: '',
+      loginPassword: '',
       loginComplete: false
     }
   }
@@ -21,7 +24,7 @@ class App extends React.Component {
   handleSubmit = (e) => {
     e.preventDefault()
     const data = new FormData();
-    data.append('username', this.state.username)
+    data.append('username', this.state.loginUsername)
     fetch('/login', {
       method: 'POST',
       body: data
@@ -32,16 +35,16 @@ class App extends React.Component {
   }
 
   render() {
-    if(!this.state.loginComplete) {
       return (
-        <Login login={this.handleSubmit} onChange={this.onChange.bind(this)} value={this.state.username}/>
+        <Main username={this.state.loginUsername} />
       )
-    } else {
-      return (
-        <Main username={this.state.username} />
-      )
-    }
   }
 }
 
 export default App;
+
+// if(!this.state.loginComplete) {
+//   return (
+//     <Login login={this.handleSubmit} onChange={this.onChange.bind(this)}/>
+//   )
+// }

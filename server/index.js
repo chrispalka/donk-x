@@ -17,10 +17,10 @@ const stockX = new stockxAPI();
 
 
 const app = express();
-app.set('view-engine', 'ejs')
+// app.set('view-engine', 'ejs')
 app.use(
   cors({
-    origin: 'http://localhost:300',
+    origin: 'http://localhost:3000',
     credentials: true,
   })
 );
@@ -63,7 +63,6 @@ app.post('/search', upload.none(), (req, res) => {
       const productList = await stockX.newSearchProducts(search, {
         limit: 20
       });
-      res.set(headers);
       res.status(200).json({ productList })
     }
     catch(e){
@@ -77,7 +76,6 @@ app.post('/renderfavorite', upload.none(), (req, res) => {
   console.log('currentuser: ', currentuser)
   insertRow(`SELECT * FROM FAVORITES WHERE user_id = (SELECT id FROM users WHERE username = '${currentuser}' )`, (result) => {
     result = JSON.parse(JSON.stringify(result));
-    res.set(headers);
     res.status(200).json({ result })
   })
 });
@@ -96,8 +94,6 @@ app.post('/favorite', upload.none(), (req, res) => {
       return result;
     })
   }
-
-  res.set(headers);
   res.sendStatus(200);
 });
 
