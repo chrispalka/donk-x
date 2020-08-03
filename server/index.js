@@ -32,6 +32,10 @@ app.use(session({
 }));
 app.use(cookieParser('secretcode'));
 
+app.get('*', (req, res) => {
+  res.sendFile('index.html', {root: path.join(__dirname, '../public/dist')});
+});
+
 app.post('/login', upload.none(), (req, res) => {
   let username = req.body.username;
 

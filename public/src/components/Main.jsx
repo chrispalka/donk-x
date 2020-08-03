@@ -134,59 +134,34 @@ class Main extends React.Component {
   }
 
   render() {
-    if (!this.state.favoriteView) {
-      return (
-        <div className="container">
+    return (
+      <div className="container">
         <Navigation />
-
-          <span className="favorite"><FontAwesomeIcon icon={faStar} onClick={this.renderFavorites} /></span>
-          <form onSubmit={this.handleSearch}>
-            <div className="form-group">
-              <input type="text" className="form-control" name="search" value={this.state.search} onChange={this.onChange} placeholder="Lets find some sneakers!"></input>
-            </div>
-          </form>
-          <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Highest Bid</th>
-                <th scope="col">Last Sale</th>
-              </tr>
-            </thead>
-            <List searchResults={this.state.searchResults} favoriteResults={this.state.favoriteResults} handleFavorite={this.handleFavorite} />
-          </table>
-        </div>
-      )
-    } else if (!Object.entries(this.state.favoriteResults).length < 1) {
-      return (
-        <div className="container">
-          {h1}
-          <span className="favorite"><FontAwesomeIcon icon={['fas', 'home']} onClick={this.renderFavorites} /></span>
-          <table className="table table-striped table-dark">
-            <thead>
-              <tr>
-                <th scope="col"></th>
-                <th scope="col"></th>
-                <th scope="col">Name</th>
-                <th scope="col">Highest Bid</th>
-                <th scope="col">Last Sale</th>
-              </tr>
-            </thead>
-            <Favorites favoriteResults={this.state.favoriteResults} savedFavorites={this.state.savedFavorites} handleFavorite={this.handleFavorite} />
-          </table>
-        </div>
-      )
-    } else {
-      return (
-        <div className="container">
-          {h1}
-          <span className="favorite"><FontAwesomeIcon icon={['fas', 'home']} onClick={this.renderFavorites} /></span>
-          <h3>Come back when you have added some favorites!</h3>
-        </div>
-      )
-    }
+        <span className="favorite"><FontAwesomeIcon icon={faStar} onClick={this.renderFavorites} /></span>
+        <form onSubmit={this.handleSearch}>
+          <div className="form-group">
+            <input type="text" className="form-control" name="search" value={this.state.search} onChange={this.onChange} placeholder="Lets find some sneakers!"></input>
+          </div>
+        </form>
+        <table className="table table-striped table-dark">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col"></th>
+              <th scope="col">Name</th>
+              <th scope="col">Highest Bid</th>
+              <th scope="col">Last Sale</th>
+            </tr>
+          </thead>
+          <Router>
+            <Route path='/favorites' render={(props) => (
+              <Favorites {...props} favoriteResults={this.state.favoriteResults} savedFavorites={this.state.savedFavorites} handleFavorite={this.handleFavorite} />
+            )} />
+          <List searchResults={this.state.searchResults} favoriteResults={this.state.favoriteResults} handleFavorite={this.handleFavorite} />
+          </Router>
+        </table>
+      </div>
+    )
   }
 }
 
